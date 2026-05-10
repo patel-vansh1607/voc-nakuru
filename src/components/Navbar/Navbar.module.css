@@ -1,0 +1,184 @@
+/* Navbar.module.css */
+
+.navbar {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    max-width: 1300px;
+    height: 70px;
+    background: rgba(65, 2, 57, 0.7); /* Deep Grape Wine */
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(230, 211, 179, 0.15); /* Champagne border */
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 30px;
+}
+
+.logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #E6D3B3;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+/* Nav Links Base */
+.navLinks {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 8px;
+}
+
+.navLinks li a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Hover effect for standard links */
+.navLinks li a:not(.uploadBtn):not(.activeLink):hover {
+    color: #E6D3B3;
+    background: rgba(230, 211, 179, 0.08);
+}
+
+/* Active State Styling */
+.activeLink {
+    color: #E6D3B3 !important;
+    background: rgba(230, 211, 179, 0.1);
+}
+
+.activeLink::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 18px;
+    right: 18px;
+    height: 2px;
+    background: #E6D3B3;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(230, 211, 179, 0.5);
+}
+
+/* Premium Upload Button */
+.uploadBtn {
+    background-color: #E6D3B3;
+    color: #2D1221 !important;
+    padding: 10px 24px !important;
+    border-radius: 12px;
+    font-weight: 700 !important;
+    margin-left: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.uploadBtn:hover {
+    background-color: #ffffff;
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile Toggle Hamburger */
+.menuToggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.bar {
+    width: 24px;
+    height: 2px;
+    background-color: #E6D3B3;
+    transition: 0.3s;
+    border-radius: 10px;
+}
+
+/* Hamburger to X Animation */
+.toggleActive .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.toggleActive .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.toggleActive .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 1024px) {
+    .menuToggle {
+        display: flex;
+    }
+
+    .navLinks {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        flex-direction: column;
+        justify-content: center;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: rgba(45, 18, 33, 0.98);
+        backdrop-filter: blur(20px);
+        transition: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+        padding: 40px;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .navLinks.active {
+        right: 0;
+    }
+
+    .navLinks li {
+        margin: 15px 0;
+        width: 100%;
+    }
+
+    .navLinks li a {
+        font-size: 1.2rem;
+        display: block;
+        text-align: left;
+    }
+
+    .activeLink::after {
+        left: 0;
+        right: auto;
+        width: 30px;
+        bottom: -5px;
+    }
+
+    .uploadBtn {
+        margin-left: 0;
+        margin-top: 20px;
+        text-align: center !important;
+    }
+}
