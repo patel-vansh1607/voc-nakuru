@@ -81,6 +81,7 @@
 .logo {
     width: clamp(80px, 12vw, 110px); 
     margin-bottom: 10px;
+    width: 200px;
 }
 
 .headline {
@@ -94,7 +95,7 @@
 
 @media screen and (max-width: 600px) {
     .deco {
-        width: 85px;
+        width: 170px;
     }
     .headline {
         line-height: 1.1;
