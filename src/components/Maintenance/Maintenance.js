@@ -23,7 +23,6 @@ const Maintenance = () => {
 
         <main className={styles.mainContent}>
           <h1 className={styles.headline}>We Are Almost <br/> Ready to Launch!</h1>
-          <p className={styles.date}>14 . 05 . 2026</p>
         </main>
       </div>
     </div>

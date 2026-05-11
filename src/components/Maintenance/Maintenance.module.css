@@ -87,19 +87,10 @@
     font-family: 'Prettywise', serif;
     font-size: clamp(2.2rem, 9vw, 5rem);
     line-height: 0.95;
-    text-transform: uppercase;
     margin: 0;
     font-weight: 500;
 }
 
-.date {
-    font-family: inherit;
-    font-size: clamp(0.75rem, 1.8vw, 1rem);
-    text-transform: uppercase;
-    letter-spacing: 8px;
-    margin-top: 30px;
-    opacity: 0.5;
-}
 
 @media screen and (max-width: 600px) {
     .deco {
