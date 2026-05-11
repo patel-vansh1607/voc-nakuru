@@ -1,0 +1,79 @@
+/* Banner.module.css */
+
+.bannerWrapper {
+    /* Clears the fixed navbar */
+    margin-top: 100px; 
+    width: 100%;
+    padding: 0 20px; /* This keeps that nice side padding from your screenshot */
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.bannerLink {
+    display: block;
+    width: 100%;
+    max-width: 1920px; /* Limits growth on ultra-wide screens */
+    height: auto;
+    position: relative;
+    text-decoration: none;
+    overflow: hidden;
+    /* This matches your navbar's rounded "pill" aesthetic */
+    border-radius: 20px; 
+    border: 1px solid rgba(230, 211, 179, 0.15);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.bannerImage {
+    width: 100%;
+    height: auto;
+    object-fit: contain; /* Keeps the whole image visible flat */
+    display: block;
+    animation: breathingZoom 15s infinite alternate ease-in-out;
+}
+
+@keyframes breathingZoom {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.04); }
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom, 
+        rgba(0, 0, 0, 0.05) 0%, 
+        rgba(0, 0, 0, 0.2) 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* On very large screens where you want it edge-to-edge */
+@media screen and (min-width: 1920px) {
+    .bannerWrapper {
+        padding: 0;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+    }
+    
+    .bannerLink {
+        border-radius: 0; /* Flat edge for huge monitors */
+        max-width: none;
+    }
+}
+
+/* Mobile Tweak */
+@media screen and (max-width: 768px) {
+    .bannerWrapper {
+        margin-top: 90px;
+        padding: 0 15px; /* Slightly tighter padding for phones */
+    }
+    
+    .bannerLink {
+        border-radius: 18px; /* Slightly tighter curves for mobile */
+    }
+}
