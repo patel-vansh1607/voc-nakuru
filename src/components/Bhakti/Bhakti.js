@@ -2,89 +2,94 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 import styles from "./Bhakti.module.css";
+import { ChevronLeft, Info, Calendar, MapPin } from "lucide-react";
 
 const Bhakti = () => {
   const navigate = useNavigate();
   const [eventStatus, setEventStatus] = useState("waiting");
 
   useEffect(() => {
-    // 1. Fetch specifically for Bhakti Bhavna
     const fetchStatus = async () => {
       const { data } = await supabase
         .from('event_settings')
         .select('status')
-        .eq('id', 'bhakti_bhavna') // Targets only Bhakti
+        .eq('id', 'bhakti_bhavna')
         .single();
-      
       if (data) setEventStatus(data.status);
     };
     fetchStatus();
 
-    // 2. Real-time sync for specifically this row
     const channel = supabase
-      .channel('bhakti-status-sync')
+      .channel('bhakti-sync')
       .on('postgres_changes', { 
         event: 'UPDATE', 
         schema: 'public', 
         table: 'event_settings',
-        filter: 'id=eq.bhakti_bhavna' // Important: Only triggers for Bhakti
-      }, 
-      (payload) => {
+        filter: 'id=eq.bhakti_bhavna' 
+      }, (payload) => {
         setEventStatus(payload.new.status);
-      })
-      .subscribe();
+      }).subscribe();
 
     return () => supabase.removeChannel(channel);
   }, []);
 
   return (
-    <div className={styles.wrapper}>
-      <header className={styles.header}>
-        <div className={styles.topRow}>
-          <button onClick={() => navigate("/")} className={styles.backBtn}>← Back</button>
-          <span className={styles.category}>Visa Oshwal Community</span>
-        </div>
-        <div className={styles.titleArea}>
-          <h1 className={styles.title}>Bhakti Bhavna</h1>
-          <p className={styles.date}>Nakuru • 15 May 2026</p>
-        </div>
+    <div className={`${styles.wrapper} ${styles[eventStatus + 'Bg']}`}>
+      <div className={styles.overlay}></div>
+      
+      <header className={styles.navBar}>
+        <button onClick={() => navigate("/")} className={styles.backButton}>
+          <ChevronLeft size={20} />
+          <span>Events</span>
+        </button>
+        <div className={styles.brand}>Visa Oshwal Community</div>
       </header>
 
-      <main className={styles.mainContent}>
-        <div className={styles.videoContainer}>
-          {/* Status Overlay */}
-          <div className={`${styles.statusKey} ${styles[eventStatus]}`}>
-             <span className={styles.dot}></span>
-             {eventStatus === "waiting" && "UPCOMING"}
-             {eventStatus === "live" && "LIVE NOW"}
-             {eventStatus === "completed" && "COMPLETED"}
+      <main className={styles.container}>
+        <div className={styles.heroSection}>
+          <div className={styles.meta}>
+            <div className={`${styles.badge} ${styles[eventStatus + 'Badge']}`}>
+              <span className={styles.pulseDot}></span>
+              {eventStatus.toUpperCase()}
+            </div>
+            <h1 className={styles.title}>Bhakti Bhavna</h1>
+            <div className={styles.details}>
+              <span><Calendar size={14} /> 15 May 2026</span>
+              <span><MapPin size={14} /> Nakuru Center</span>
+            </div>
           </div>
 
-          {eventStatus === "waiting" && (
-            <div className={styles.waitingState}>
-              <div className={styles.pulse}></div>
-              <h2>Stream Starting Soon</h2>
-              <p>The Bhakti Bhavna will commence shortly. Stay tuned.</p>
-            </div>
-          )}
+          <div className={`${styles.screenWrapper} ${styles[eventStatus + 'Glow']}`}>
+            <div className={styles.screenInner}>
+              {eventStatus === "waiting" && (
+                <div className={styles.placeholderState}>
+                  <div className={styles.timerIcon}>📿</div>
+                  <h2>Preparing Stream</h2>
+                  <p>The spiritual session will begin shortly. Please keep this page open.</p>
+                </div>
+              )}
 
-          {eventStatus === "live" && (
-            <iframe 
-              src="https://www.youtube.com/embed/QVUhwfEq-KE?autoplay=1" 
-              title="YouTube video player" 
-              frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowFullScreen
-            ></iframe>
-          )}
+              {eventStatus === "live" && (
+                <iframe 
+                  src="https://www.youtube.com/embed/QVUhwfEq-KE?autoplay=1&rel=0" 
+                  title="Live Stream"
+                  className={styles.iframe}
+                  allowFullScreen
+                ></iframe>
+              )}
 
-          {eventStatus === "completed" && (
-            <div className={styles.completedState}>
-              <h2>Event Completed</h2>
-              <p>Thank you for joining the Nakuru Community broadcast.</p>
-              <button onClick={() => setEventStatus("live")} className={styles.replayBtn}>Watch Replay</button>
+              {eventStatus === "completed" && (
+                <div className={styles.placeholderState}>
+                  <div className={styles.checkIcon}>✓</div>
+                  <h2>Session Concluded</h2>
+                  <p>The broadcast has ended. Replay is available below.</p>
+                  <button onClick={() => setEventStatus("live")} className={styles.replayBtn}>
+                    Watch Replay
+                  </button>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </main>
     </div>
