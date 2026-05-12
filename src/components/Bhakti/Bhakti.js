@@ -5,18 +5,30 @@ import styles from "./Bhakti.module.css";
 
 const Bhakti = () => {
   const navigate = useNavigate();
-  const [eventStatus, setEventStatus] = useState("waiting"); // waiting, live, completed
+  const [eventStatus, setEventStatus] = useState("waiting");
 
   useEffect(() => {
+    // 1. Fetch specifically for Bhakti Bhavna
     const fetchStatus = async () => {
-      const { data } = await supabase.from('event_settings').select('*').single();
+      const { data } = await supabase
+        .from('event_settings')
+        .select('status')
+        .eq('id', 'bhakti_bhavna') // Targets only Bhakti
+        .single();
+      
       if (data) setEventStatus(data.status);
     };
     fetchStatus();
 
+    // 2. Real-time sync for specifically this row
     const channel = supabase
-      .channel('schema-db-changes')
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'event_settings' }, 
+      .channel('bhakti-status-sync')
+      .on('postgres_changes', { 
+        event: 'UPDATE', 
+        schema: 'public', 
+        table: 'event_settings',
+        filter: 'id=eq.bhakti_bhavna' // Important: Only triggers for Bhakti
+      }, 
       (payload) => {
         setEventStatus(payload.new.status);
       })
@@ -40,7 +52,7 @@ const Bhakti = () => {
 
       <main className={styles.mainContent}>
         <div className={styles.videoContainer}>
-          {/* Status Key / Indicator Overlay */}
+          {/* Status Overlay */}
           <div className={`${styles.statusKey} ${styles[eventStatus]}`}>
              <span className={styles.dot}></span>
              {eventStatus === "waiting" && "UPCOMING"}
