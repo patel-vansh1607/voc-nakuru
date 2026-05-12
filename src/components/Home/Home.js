@@ -1,55 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './Home.module.css';
 
 const Home = () => {
-  const streams = [
-    { day: "Day 1", date: "Friday, 23 January 2026", id: "VIDEO_ID_1" },
-    { day: "Day 2", date: "Saturday, 24 January 2026", id: "VIDEO_ID_2" },
-    { day: "Day 3", date: "Sunday, 25 January 2026", id: "VIDEO_ID_3" },
-  ];
 
-  const [selectedStream, setSelectedStream] = useState(null);
+  const events = [
+    {
+      id: "event-1",
+      title: "Stone Laying Ceremony",
+      date: "15 . 05 . 2026",
+      path: "/stone-laying-ceremony"
+    },
+    {
+      id: "event-2",
+      title: "January Ceremonies",
+      date: "23 . 01 . 2026",
+      path: "/replays"
+    }
+  ];
 
   return (
     <div className={styles.container}>
-      <div className={styles.headerArea}>
-        <h2 className={styles.title}>Select a day to view</h2>
-        <div className={styles.underline}></div>
-      </div>
-      
-      <div className={styles.cardList}>
-        {streams.map((item, index) => (
-          <div 
-            key={index} 
-            className={styles.cardWrapper}
-            onClick={() => setSelectedStream(item.id)}
+      <header className={styles.header}>
+        <h2 className={styles.subtitle}>Visa Oshwal Community Nakuru</h2>
+        <h1 className={styles.mainTitle}>Portal Events</h1>
+      </header>
+
+      <div className={styles.buttonGrid}>
+        {events.map((event) => (
+          /* Changed from <button> to <a> and using href */
+          <a 
+            key={event.id} 
+            href={event.path} 
+            className={styles.eventButton}
           >
-            <div className={styles.badge}>
-              ✓ COMPLETED- CLICK TO WATCH REPLAY
+            <span className={styles.eventType}>{event.id.toUpperCase()}</span>
+            <h3 className={styles.eventTitle}>{event.title}</h3>
+            <div className={styles.footer}>
+              <span className={styles.eventDate}>{event.date}</span>
+              <span className={styles.actionText}>Enter Route →</span>
             </div>
-            
-            <div className={styles.cardBody}>
-              <span className={styles.dayLabel}>{item.day}</span>
-              <span className={styles.divider}>|</span>
-              <span className={styles.dateLabel}>{item.date}</span>
-            </div>
-          </div>
+          </a>
         ))}
       </div>
-
-      {selectedStream && (
-        <div className={styles.videoOverlay}>
-          <div className={styles.videoContainer}>
-            <button onClick={() => setSelectedStream(null)} className={styles.closeBtn}>✕ Close</button>
-            <iframe
-              src={`https://www.youtube.com/embed/${selectedStream}?autoplay=1`}
-              title="Event Replay"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

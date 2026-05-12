@@ -1,16 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom'; // 1. Import this
 import './index.css';
+import App from './App'; 
 import Maintenance from './components/Maintenance/Maintenance'; 
 import reportWebVitals from './reportWebVitals';
 
+// SET THIS TO 'false' TO TURN OFF MAINTENANCE MODE
+const isMaintenance = false; 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-// We are only rendering Maintenance. 
-// No need to even import App.js until you're ready to go live.
 root.render(
   <React.StrictMode>
-    <Maintenance />
+    {/* 2. Wrap the logic in BrowserRouter */}
+    <BrowserRouter>
+      {isMaintenance ? <Maintenance /> : <App />}
+    </BrowserRouter>
   </React.StrictMode>
 );
 

@@ -1,0 +1,180 @@
+.container {
+    height: 100vh;
+    background-color: #1a0117; /* Even darker grape for depth */
+    display: flex;
+    flex-direction: column;
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+    color: #E6D3B3;
+}
+
+/* Mesh Gradient Background */
+.meshBox {
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 80vw;
+    height: 80vw;
+    background: radial-gradient(circle at center, rgba(45, 1, 39, 1) 0%, rgba(26, 1, 23, 0) 70%);
+    z-index: 0;
+}
+
+.contentSplit {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    z-index: 1;
+}
+
+/* Left Side Branding */
+.brandSide {
+    flex: 1.2;
+    padding-right: 100px;
+}
+
+.logoMark {
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 8px;
+    margin-bottom: 80px;
+    border-left: 2px solid #E6D3B3;
+    padding-left: 15px;
+}
+
+.kicker {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    opacity: 0.6;
+}
+
+.title {
+    font-family: 'Prettywise', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 0.9;
+    margin: 20px 0;
+}
+
+.description {
+    max-width: 400px;
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.5;
+    font-weight: 300;
+}
+
+/* Right Side Form */
+.formSide {
+    flex: 0.8;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.glassCard {
+    background: rgba(230, 211, 179, 0.02);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(230, 211, 179, 0.1);
+    border-radius: 2px; /* Brutalist sharp edges or use 30px for soft */
+    padding: 50px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 50px 100px rgba(0,0,0,0.4);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    border-bottom: 1px solid rgba(230, 211, 179, 0.1);
+    padding-bottom: 20px;
+}
+
+.cardHeader h3 {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+}
+
+.statusDot {
+    width: 8px;
+    height: 8px;
+    background: #E6D3B3;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #E6D3B3;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.4; }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.field input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(230, 211, 179, 0.3);
+    padding: 15px 0;
+    color: #E6D3B3;
+    font-size: 1.1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+.field input:focus {
+    border-bottom-color: #E6D3B3;
+}
+
+.actionBtn {
+    background: #E6D3B3;
+    color: #2D0127;
+    border: none;
+    padding: 20px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 20px;
+}
+
+.actionBtn:hover {
+    letter-spacing: 4px;
+    background: #fff;
+}
+
+/* Footer */
+.footer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    opacity: 0.4;
+    z-index: 1;
+}
+
+.line {
+    width: 50px;
+    height: 1px;
+    background: #E6D3B3;
+}
+
+/* Mobile */
+@media screen and (max-width: 1024px) {
+    .container { padding: 30px; }
+    .contentSplit { flex-direction: column; text-align: center; }
+    .brandSide { padding-right: 0; margin-bottom: 50px; }
+    .description { margin: 0 auto; }
+    .logoMark { margin-bottom: 40px; display: inline-block; }
+    .formSide { justify-content: center; width: 100%; }
+}
