@@ -8,30 +8,23 @@ const Home = () => {
   const [statuses, setStatuses] = useState({});
 
   useEffect(() => {
-    // 1. Fetch statuses for all events
     const fetchStatuses = async () => {
-      const { data, error } = await supabase.from('event_settings').select('event_name, status');
+      const { data } = await supabase.from('event_settings').select('title, status');
       if (data) {
-        // Create a mapping like { "Bhakti Bhavna": "live", "Stone Laying": "waiting" }
         const statusMap = data.reduce((acc, curr) => {
-          acc[curr.event_name] = curr.status;
+          acc[curr.title] = curr.status;
           return acc;
         }, {});
         setStatuses(statusMap);
       }
     };
-
     fetchStatuses();
 
-    // 2. Real-time update
     const channel = supabase
-      .channel('home-status-sync')
+      .channel('home-sync')
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'event_settings' }, 
       (payload) => {
-        setStatuses(prev => ({
-          ...prev,
-          [payload.new.event_name]: payload.new.status
-        }));
+        setStatuses(prev => ({ ...prev, [payload.new.title]: payload.new.status }));
       })
       .subscribe();
 
@@ -39,30 +32,22 @@ const Home = () => {
   }, []);
 
   const events = [
-    {
-      id: "event-1",
-      title: "Stone Laying Ceremony",
-      date: "15 . 05 . 2026",
-      path: "/stone-laying-ceremony"
-    },
-    {
-      id: "event-2",
-      title: "Bhakti Bhavna",
-      date: "15 . 05 . 2026",
-      path: "/bhakti-bhavna"
-    }
+    { id: "event-1", title: "Stone Laying Ceremony", date: "15 . 05 . 2026", path: "/stone-laying-ceremony" },
+    { id: "event-2", title: "Bhakti Bhavna", date: "15 . 05 . 2026", path: "/bhakti-bhavna" }
   ];
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <h2 className={styles.subtitle}>Visa Oshwal Community Nakuru</h2>
-        <h1 className={styles.mainTitle}>Upcoming Events</h1>
+        <h1 className={styles.mainTitle}>Events</h1>
       </header>
 
       <div className={styles.buttonGrid}>
         {events.map((event) => {
           const currentStatus = statuses[event.title] || "waiting";
+          const isLive = currentStatus === "live";
+          const isCompleted = currentStatus === "completed";
           
           return (
             <div 
@@ -70,19 +55,25 @@ const Home = () => {
               onClick={() => navigate(event.path)} 
               className={`${styles.eventButton} ${styles[currentStatus]}`}
             >
-              <div className={styles.topRow}>
+              {/* WHITE STATUS BAR */}
+              <div className={styles.statusSection}>
                 <span className={styles.eventType}>{event.id.toUpperCase()}</span>
-                {/* Dynamic Status Badge */}
-                <span className={`${styles.statusBadge} ${styles[currentStatus + 'Badge']}`}>
-                  {currentStatus === "live" ? "● LIVE" : currentStatus.toUpperCase()}
-                </span>
+                <div className={`${styles.statusBadge} ${styles[currentStatus + 'Badge']}`}>
+                  {isLive && <span className={styles.liveDot}></span>}
+                  {isLive ? "LIVE NOW" : isCompleted ? "COMPLETED" : "UPCOMING"}
+                </div>
               </div>
 
-              <h3 className={styles.eventTitle}>{event.title}</h3>
-              
-              <div className={styles.footer}>
-                <span className={styles.eventDate}>{event.date}</span>
-                <span className={styles.actionText}>Enter Route →</span>
+              {/* PURPLE CONTENT AREA */}
+              <div className={styles.contentSection}>
+                <h3 className={styles.eventTitle}>{event.title}</h3>
+                
+                <div className={styles.footer}>
+                  <span className={styles.eventDate}>{event.date}</span>
+                  <div className={styles.actionButton}>
+                    {isLive ? "WATCH LIVE" : isCompleted ? "WATCH REPLAY" : "ENTER"} →
+                  </div>
+                </div>
               </div>
             </div>
           );

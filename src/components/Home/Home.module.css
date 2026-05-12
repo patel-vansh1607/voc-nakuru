@@ -1,12 +1,10 @@
 .container {
     min-height: 100vh;
-    background-color: #2D0127;
-    color: #E6D3B3;
+    background-color: #1a0117; /* Dark background */
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 40px 20px;
+    padding: 60px 20px;
 }
 
 .header {
@@ -18,74 +16,133 @@
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 5px;
+    color: #E6D3B3;
     opacity: 0.6;
-    margin-bottom: 10px;
 }
 
 .mainTitle {
     font-family: 'Prettywise', serif;
-    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-size: clamp(3rem, 10vw, 5rem);
     text-transform: uppercase;
+    color: #E6D3B3;
 }
 
 .buttonGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: 2fr;
     gap: 30px;
     width: 100%;
-    max-width: 1000px;
+    max-width: 900px;
 }
 
+/* THE MASSIVE BUTTON */
 .eventButton {
-    background: rgba(230, 211, 179, 0.03);
-    border: 1px solid rgba(230, 211, 179, 0.15);
-    padding: 40px;
-    border-radius: 30px;
-    text-align: left;
+    background: #2D0127; /* Deep Purple */
+    border-radius: 40px;
     cursor: pointer;
-    transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    overflow: hidden; /* Clips the white bar to the border radius */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(230, 211, 179, 0.1);
+    min-height: 380px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    min-height: 250px;
-    color: #E6D3B3;
 }
 
 .eventButton:hover {
-    background: rgba(230, 211, 179, 0.08);
+    transform: translateY(-10px);
     border-color: #E6D3B3;
-    transform: translateY(-8px);
+}
+
+/* THE WHITE STATUS BAR */
+.statusSection {
+    background: #ffffff; /* pure white */
+    padding: 25px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .eventType {
-    font-size: 0.7rem;
-    font-weight: 800;
+    font-size: 0.8rem;
+    font-weight: 900;
     letter-spacing: 2px;
-    opacity: 0.4;
-    margin-bottom: 20px;
+    color: #2D0127;
+}
+
+/* CONTENT AREA */
+.contentSection {
+    padding: 50px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .eventTitle {
     font-family: 'Prettywise', serif;
-    font-size: 2.2rem;
-    line-height: 1.1;
-    text-decoration: none  ! important;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: #E6D3B3;
+    line-height: 1;
+    margin: 0;
 }
 
 .footer {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     margin-top: 40px;
 }
 
 .eventDate {
-    font-size: 1.1rem;
-    font-weight: 300;
+    font-size: 1.3rem;
+    color: #E6D3B3;
+    opacity: 0.8;
 }
 
-.actionText {
-    font-size: 0.75rem;
-    font-weight: 700;
+.actionButton {
+    background: #E6D3B3;
+    color: #2D0127;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-weight: 900;
     text-transform: uppercase;
+}
+
+/* BADGES ON WHITE BACKGROUND */
+.statusBadge {
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.waitingBadge { background: #f0f0f0; color: #2D0127; }
+.liveBadge { background: #ff4d4d; color: white; }
+.completedBadge { background: #2ecc71; color: white; }
+
+.liveDot {
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+}
+
+/* STATE EFFECTS */
+.live { border-color: #ff4d4d !important; }
+.live .statusSection { background: #fff; border-bottom: 4px solid #ff4d4d; }
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 600px) {
+    .statusSection { padding: 20px; }
+    .contentSection { padding: 30px; }
+    .eventTitle { font-size: 2.2rem; }
 }

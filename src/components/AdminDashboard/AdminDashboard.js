@@ -1,43 +1,62 @@
 import React from 'react';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import styles from './AdminDashboard.module.css';
-import { LayoutDashboard, ArrowRight } from 'lucide-react';
+import { LayoutDashboard, FileText, Settings, Layers, LogOut } from 'lucide-react';
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Logic to highlight the active button based on the current URL
+  const isActive = (path) => location.pathname === path;
+
   return (
     <div className={styles.layout}>
-      {/* Sidebar Navigation */}
+      {/* Sidebar Navigation - Permanent Shell */}
       <aside className={styles.sidebar}>
-        <div className={styles.sidebarLogo}>MINT</div>
+        <div className={styles.sidebarLogo} onClick={() => navigate('/admin/dashboard')}>
+          MINT
+        </div>
         
-        <nav className={styles.navGroup}>
-          <a href="/admin/pages" className={styles.navLink}>
-            <LayoutDashboard size={18} />
-            Pages
-          </a>
-          {/* Add more links here later */}
-        </nav>
+        <div className={styles.navSection}>
+          <p className={styles.navLabel}>General</p>
+          <nav className={styles.navGroup}>
+            <button 
+              onClick={() => navigate('/admin/dashboard')}
+              className={`${styles.navLink} ${isActive('/admin/dashboard') ? styles.active : ''}`}
+            >
+              <LayoutDashboard size={18} />
+              Dashboard
+            </button>
+          </nav>
+        </div>
+
+        <div className={styles.navSection}>
+          <p className={styles.navLabel}>Studio</p>
+          <nav className={styles.navGroup}>
+            <button 
+              onClick={() => navigate('/admin/pages')}
+              className={`${styles.navLink} ${isActive('/admin/pages') ? styles.active : ''}`}
+            >
+              <FileText size={18} />
+              Pages
+            </button>
+            <button className={styles.navLink}><Layers size={18} /> Components</button>
+            <button className={styles.navLink}><Settings size={18} /> Settings</button>
+          </nav>
+        </div>
+
+        <button className={styles.logoutBtn} onClick={() => navigate('/admin/login')}>
+          <LogOut size={18} />
+          <span>Logout</span>
+        </button>
       </aside>
 
       {/* Main Content Area */}
       <main className={styles.mainContent}>
-        <header className={styles.header}>
-          <p className={styles.subtitle}>Executive Suite</p>
-          <h1 className={styles.mainTitle}>Dashboard</h1>
-        </header>
-
-        <div className={styles.dashboardGrid}>
-          <div className={styles.eventButton} onClick={() => window.location.href='/reports'}>
-            <div>
-              <span className={styles.eventType}>System Stat</span>
-              <h3 className={styles.eventTitle}>Platform Performance</h3>
-            </div>
-            <div className={styles.footer}>
-              <span className={styles.eventDate}>Active Now</span>
-              <span className={styles.actionText}>
-                Open Report <ArrowRight size={14} style={{ marginLeft: '5px' }} />
-              </span>
-            </div>
-          </div>
+        <div className={styles.scrollArea}>
+          {/* THE OUTLET: This is where AdminStudio or other pages render */}
+          <Outlet />
         </div>
       </main>
     </div>

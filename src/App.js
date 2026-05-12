@@ -10,45 +10,42 @@ import Stone from "./components/Stone/Stone";
 import Bhakti from "./components/Bhakti/Bhakti";
 import AdminLogin from "./components/Login/Login";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
-import EventControlPage from "./components/EventController/EventController";
+import AdminStudio from "./components/AdminStudio/AdminStudio";
 
 function App() {
   const location = useLocation();
-  
-  // Logic to hide Navbar on all admin-related routes
   const isAdminPage = location.pathname.startsWith('/admin');
 
   return (
     <>
-      {/* Show Navbar only if NOT on an admin page */}
       {!isAdminPage && <Navbar />}
 
       <Routes>
         {/* Public Routes */}
-        <Route 
-          path="/" 
-          element={
-            <>
-              <Banner />
-              <Home />
-            </>
-          } 
-        />
+        <Route path="/" element={<><Banner /><Home /></>} />
         <Route path="/stone-laying-ceremony" element={<Stone />} />
         <Route path="/bhakti-bhavna" element={<Bhakti />} />
         
         {/* Admin Login */}
         <Route path="/admin/login" element={<AdminLogin />} />
 
-        {/* Admin Routes 
-          Note: AdminDashboard already has its own internal redirect logic 
-          if the session is missing, so we keep these straightforward.
-        */}
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        {/* Redirects & Helpers */}
+        {/* --- NESTED ADMIN ROUTES --- */}
+        <Route path="/admin" element={<AdminDashboard />}>
+          {/* This renders at /admin/dashboard */}
+          <Route path="dashboard" element={
+            <div style={{ padding: '40px', color: 'white' }}>
+              <h1>Dashboard Overview</h1>
+              <p>Welcome to the Executive Suite.</p>
+            </div>
+          } />
+          
+          {/* This renders at /admin/pages */}
+          <Route path="pages" element={<AdminStudio />} />
+        </Route>
+
+        {/* Redirects */}
         <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
         
-        {/* Catch-all for 404s */}
         <Route path="*" element={
           <div style={{ color: 'white', padding: '100px', textAlign: 'center' }}>
             <h2>404 - Page Not Found</h2>
