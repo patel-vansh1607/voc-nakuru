@@ -11,70 +11,75 @@ const AdminLogin = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (!email || !password) return;
 
-    if (error) {
-      alert(error.message);
+    setLoading(true);
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ 
+        email: email.trim(), 
+        password: password 
+      });
+
+      if (error) {
+        alert(error.message);
+        setLoading(false);
+      } else if (data.session) {
+        // Use replace: true to clear login from history
+        navigate('/admin/dashboard', { replace: true });
+      }
+    } catch (err) {
+      alert("An unexpected error occurred.");
       setLoading(false);
-    } else {
-      navigate('/admin/dashboard');
     }
   };
 
   return (
     <div className={styles.container}>
-      {/* Dynamic Background Elements */}
       <div className={styles.meshBox}></div>
-      
       <div className={styles.contentSplit}>
-        {/* Left Side: Branding/Context */}
         <div className={styles.brandSide}>
           <div className={styles.heroText}>
             <h1 className={styles.title}>Admin Portal</h1>
-            <p className={styles.description}>
-              Authorization is required 
-            </p>
+            <p className={styles.description}>Mission Control Authorization</p>
           </div>
         </div>
 
-        {/* Right Side: The Login Card */}
         <div className={styles.formSide}>
           <div className={styles.glassCard}>
             <div className={styles.cardHeader}>
-              <h3>Log In</h3>
-              <div className={styles.statusDot}></div>
+              <h3>Authentication</h3>
+              <div className={`${styles.statusDot} ${loading ? styles.animating : ''}`}></div>
             </div>
 
             <form onSubmit={handleLogin} className={styles.form}>
               <div className={styles.field}>
                 <input 
                   type="email" 
-                  placeholder="ID / Email" 
+                  placeholder="Admin Email" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
                   required 
                 />
               </div>
-
               <div className={styles.field}>
                 <input 
                   type="password" 
                   placeholder="Security Key" 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  disabled={loading}
                   required 
                 />
               </div>
-
               <button type="submit" className={styles.actionBtn} disabled={loading}>
-                {loading ? 'Verifying...' : 'Authenticate'}
+                {loading ? 'Verifying...' : 'Access Dashboard'}
               </button>
             </form>
           </div>
         </div>
       </div>
-
       <footer className={styles.footer}>
         <span>&copy; 2026 VOC NAKURU</span>
         <span className={styles.line}></span>

@@ -1,0 +1,48 @@
+.controlCenter {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.liveStatusBadge {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: #E6D3B3;
+    text-transform: uppercase;
+    background: rgba(230, 211, 179, 0.1);
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 1px solid rgba(230, 211, 179, 0.2);
+}
+
+.tipsCard {
+    background: rgba(230, 211, 179, 0.02);
+    border: 1px dashed rgba(230, 211, 179, 0.2);
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.tipsCard h4 {
+    margin-bottom: 15px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tipsCard ul {
+    list-style: none;
+    padding: 0;
+}
+
+.tipsCard li {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    opacity: 0.6;
+}
+
+.tipsCard strong {
+    color: #E6D3B3;
+    opacity: 1;
+}
