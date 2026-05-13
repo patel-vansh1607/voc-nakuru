@@ -6,6 +6,7 @@
     position: relative;
     overflow-x: hidden;
     transition: background 1s ease;
+    padding: 100px;
 }
 .completedOverlay {
     position: absolute;
@@ -182,9 +183,11 @@
 .placeholderState {
     text-align: center;
     padding: 40px;
+    align-items: center;      /* Centers horizontally */
+    justify-content: center;
 }
 
-.timerIcon, .checkIcon {
+ .checkIcon {
     font-size: 4rem;
     margin-bottom: 20px;
     display: block;
@@ -230,5 +233,84 @@
         top: 10px;
         right: 10px;
         padding: 5px 10px;
+    }
+}
+.p{
+    font-family: 'Prettywise', serif;
+    line-spacing: 1.5;
+}
+.timerIcon {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(168, 85, 247, 0.15); /* Soft purple base */
+    border-radius: 50%;
+    margin-bottom: 25px;
+    align-items: center;      /* Centers Zap/Icon horizontally */
+    justify-content: center;     /* Centers Zap/Icon vertically */
+    margin: 0 auto 25px;
+}
+
+.innerZap {
+    font-size: 1.8rem;
+    z-index: 3;
+    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.8));
+    animation: zapFloat 3s ease-in-out infinite;
+}
+
+/* The Animated Pulse Rings */
+.pulseRing, .pulseRing2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid #a855f7; /* Your primary purple */
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.pulseRing {
+    animation: purpleRipple 3s infinite cubic-bezier(0.25, 0, 0.3, 1);
+}
+
+.pulseRing2 {
+    animation: purpleRipple 3s infinite cubic-bezier(0.25, 0, 0.3, 1);
+    animation-delay: 1.5s; /* Staggered effect */
+}
+
+/* Animations */
+@keyframes purpleRipple {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+        border-width: 4px;
+    }
+    100% {
+        transform: scale(2.2);
+        opacity: 0;
+        border-width: 1px;
+        filter: blur(4px);
+    }
+}
+
+@keyframes zapFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* For extreme responsive safety */
+@media (max-width: 600px) {
+    .timerIcon {
+        width: 60px;
+        height: 60px;
+    }
+    .innerZap {
+        font-size: 1.4rem;
     }
 }

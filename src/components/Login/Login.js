@@ -43,7 +43,7 @@ const AdminLogin = () => {
         <div className={styles.brandSide}>
           <div className={styles.heroText}>
             <h1 className={styles.title}>Admin Portal</h1>
-            <p className={styles.description}>Mission Control Authorization</p>
+            <p className={styles.description}>Authorization Required</p>
           </div>
         </div>
 
@@ -61,7 +61,7 @@ const AdminLogin = () => {
                 <label>Credentials</label>
                 <input 
                   type="email" 
-                  placeholder="admin@vocnakuru.com" 
+                  placeholder="admin@gmail.com" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={loading}
@@ -88,12 +88,6 @@ const AdminLogin = () => {
           </div>
         </div>
       </div>
-
-      <footer className={styles.footer}>
-        <span>&copy; 2026 VOC NAKURU</span>
-        <span className={styles.line}></span>
-        <span>SUPER ADMIN: VANSH</span>
-      </footer>
     </div>
   );
 };

@@ -79,9 +79,13 @@ const Stone = () => {
               
               {eventStatus === "waiting" && (
                 <div className={styles.placeholderState}>
-                  <div className={styles.timerIcon}>🏗️</div>
-                  <h2>Ceremony Starting Soon</h2>
-                  <p>We are preparing the broadcast. Please keep this page open.</p>
+<div className={styles.timerIcon}>
+  <div className={styles.innerZap}>⚡</div>
+  <div className={styles.pulseRing}></div>
+  <div className={styles.pulseRing2}></div>
+</div>            
+                  <h2 className={styles.p}>Live Stream will Start at <br /> 9:00am EAT, 15th May</h2>
+                  <p>We are preparing the broadcast.</p>
                 </div>
               )}
 

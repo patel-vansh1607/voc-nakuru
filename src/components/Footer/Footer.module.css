@@ -1,78 +1,65 @@
 .footer {
-    width: 100%;
-    padding: 20px 20px;
+width: 100%;
+    box-sizing: border-box; /* Padding stays inside width */
+    padding: 40px 20px;
+    background-color: #2d0127;
+    border-top: 1px solid rgba(230, 211, 179, 0.1);
     display: flex;
     justify-content: center;
-    align-items: center;
-    background-color: #2d0127;
+    position: relative; /* Fixed: It won't stick to screen anymore */
+    margin-top: auto; /* Pushes to bottom if using flex-column on parent */
 }
 
 .wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
     width: 100%;
-}
-
-.touchHint {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    color: #E6D3B3;
-    opacity: 0.5;
-    font-weight: 600;
+    max-width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
 }
 
 .signatureBox {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    margin-bottom: 10px;
+    gap: 2px;
 }
 
 .label {
-    font-size: 0.75rem;
+    font-size: 0.6rem;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #E6D3B3;
-    opacity: 0.6;
+    opacity: 0.5;
 }
 
 .nameLink {
     font-family: 'Prettywise', serif;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     color: #E6D3B3;
-    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* BUTTON GROUP */
 .actionGroup {
     display: flex;
-    gap: 15px;
-    margin-top: 10px;
+    gap: 10px;
 }
 
 .actionBtn {
-    background: #E6D3B3; /* Champagne background */
-    color: #2D0127; /* Deep purple text */
-    padding: 12px 25px;
-    border-radius: 15px;
-    font-weight: 900;
+    background: #E6D3B3;
+    color: #2D0127;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-weight: 700;
     text-transform: uppercase;
     text-decoration: none;
-    font-size: 0.8rem;
+    font-size: 0.65rem;
     display: flex;
     align-items: center;
-    gap: 10px;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease;
-}
-
-.actionBtn:hover {
-    transform: translateY(-5px);
-    background: #ffffff;
+    gap: 6px;
+    transition: transform 0.3s ease;
+    white-space: nowrap; /* Text won't break into 2 lines inside button */
 }
 
 .emailBtn {
@@ -81,22 +68,36 @@
     border: 1px solid rgba(230, 211, 179, 0.3);
 }
 
-.emailBtn:hover {
-    background: rgba(230, 211, 179, 0.1);
-    border-color: #E6D3B3;
+.actionBtn:hover {
+    transform: translateY(-2px);
 }
 
-/* Mobile Tweak */
-@media (max-width: 600px) {
-    .nameLink {
-        font-size: 1.8rem;
+/* --- RESPONSIVE FIX --- */
+@media (max-width: 650px) {
+    .wrapper {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
     }
+
+    .actionGroup {
+        width: 100%;
+        justify-content: center;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 380px) {
+    /* For very small phones, stack buttons to keep them within screen width */
     .actionGroup {
         flex-direction: column;
+        align-items: center;
         width: 100%;
-        max-width: 250px;
     }
+    
     .actionBtn {
+        width: 100%;
+        max-width: 180px;
         justify-content: center;
     }
 }

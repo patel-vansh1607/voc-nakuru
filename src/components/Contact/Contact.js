@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Contact.module.css';
-import { Mail, Phone, Zap, Globe, ShieldCheck } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 
 const Contact = () => {
   return (
@@ -8,7 +8,6 @@ const Contact = () => {
       <div className={styles.mesh}></div>
       
       <header className={styles.header}>
-        <h2 className={styles.subtitle}>Technical Support & Development</h2>
         <h1 className={styles.title}>Get In Touch</h1>
       </header>
 
@@ -20,7 +19,7 @@ const Contact = () => {
           </p>
 
           <div className={styles.devInfo}>
-            <span className={styles.name}>Vansh Patel</span>
+            {/* <span className={styles.name}>Vansh Patel</span> */}
           </div>
 
           <div className={styles.btnGroup}>

@@ -14,6 +14,7 @@ import AdminLogin from "./components/Login/Login";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import AdminStudio from "./components/AdminStudio/AdminStudio";
 import Contact from "./components/Contact/Contact";
+import NotFound from "./components/NotFound.js/NotFound";
 
 // --- PROTECTED ROUTE COMPONENT ---
 const ProtectedRoute = () => {
@@ -73,12 +74,7 @@ function App() {
 
         <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
         
-        <Route path="*" element={
-          <div style={{ color: 'white', padding: '100px', textAlign: 'center' }}>
-            <h2>404 - Page Not Found</h2>
-            <button onClick={() => window.location.href = '/'}>Go Home</button>
-          </div>
-        } />
+        <Route path="*" element={<NotFound />    } />
       </Routes>
 
       {/* --- ADD FOOTER HERE --- */}

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Footer.module.css';
-import { Mail, MessageCircle } from 'lucide-react'; // Lucide icons for a premium look
+import { Mail, MessageCircle } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -8,7 +8,7 @@ const Footer = () => {
       <div className={styles.wrapper}>
         
         <div className={styles.signatureBox}>
-          <span className={styles.label}>Website Designed & Developed by</span>
+          <span className={styles.label}>website Developed & designed by</span>
           <span className={styles.nameLink}>Vansh Patel</span>
         </div>
 
@@ -19,7 +19,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             className={styles.actionBtn}
           >
-            <MessageCircle size={18} />
+            <MessageCircle size={16} />
             <span>WhatsApp</span>
           </a>
 
@@ -27,10 +27,11 @@ const Footer = () => {
             href="mailto:pvansh830@gmail.com" 
             className={`${styles.actionBtn} ${styles.emailBtn}`}
           >
-            <Mail size={18} />
+            <Mail size={16} />
             <span>Email</span>
           </a>
         </div>
+
       </div>
     </footer>
   );

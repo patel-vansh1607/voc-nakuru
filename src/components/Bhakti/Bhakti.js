@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 import styles from "./Bhakti.module.css";
+import styless   from "../Stone/Stone.module.css"; // Reusing some styles for loading state
 import { ChevronLeft, Calendar, MapPin, Loader2 } from "lucide-react";
 
 const Bhakti = () => {
@@ -80,9 +81,13 @@ const Bhakti = () => {
               {/* WAITING */}
               {eventStatus === "waiting" && (
                 <div className={styles.placeholderState}>
-                  <div className={styles.timerIcon}>📿</div>
-                  <h2>Preparing Stream</h2>
-                  <p>The spiritual session will begin shortly. Please keep this page open.</p>
+<div className={styless.timerIcon}>
+  <div className={styless.innerZap}>⚡</div>
+  <div className={styless.pulseRing}></div>
+  <div className={styless.pulseRing2}></div>
+</div>            
+                  <h2 className={styless.p}>Live Stream will Start at <br /> 7:45pm EAT, 15th May</h2>
+                  <p>We are preparing the broadcast.</p>
                 </div>
               )}
 
