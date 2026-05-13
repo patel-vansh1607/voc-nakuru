@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation, Navigate, Outlet } from "react-router-dom";
-import { supabase } from "./supabaseClient"; // Ensure this path is correct
+import { supabase } from "./supabaseClient"; 
 import "./App.css";
 
 // Components
 import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer"; // Import your new Footer
 import Home from "./components/Home/Home";
 import Banner from "./components/Banner/Banner";
 import Stone from "./components/Stone/Stone";
@@ -12,6 +13,7 @@ import Bhakti from "./components/Bhakti/Bhakti";
 import AdminLogin from "./components/Login/Login";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import AdminStudio from "./components/AdminStudio/AdminStudio";
+import Contact from "./components/Contact/Contact";
 
 // --- PROTECTED ROUTE COMPONENT ---
 const ProtectedRoute = () => {
@@ -19,13 +21,11 @@ const ProtectedRoute = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setLoading(false);
     });
 
-    // Listen for auth changes (login/logout)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
@@ -33,17 +33,19 @@ const ProtectedRoute = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  if (loading) return null; // Or a loader
+  if (loading) return null;
 
   return session ? <Outlet /> : <Navigate to="/admin/login" replace />;
 };
 
 function App() {
   const location = useLocation();
+  // Check if we are in the admin panel
   const isAdminPage = location.pathname.startsWith('/admin');
 
   return (
     <>
+      {/* Show Navbar only if NOT an admin page */}
       {!isAdminPage && <Navbar />}
 
       <Routes>
@@ -51,8 +53,9 @@ function App() {
         <Route path="/" element={<><Banner /><Home /></>} />
         <Route path="/stone-laying-ceremony" element={<Stone />} />
         <Route path="/bhakti-bhavna" element={<Bhakti />} />
+        <Route path="/contact" element={<Contact />} />
         
-        {/* Admin Login - Always Accessible */}
+        {/* Admin Login */}
         <Route path="/admin/login" element={<AdminLogin />} />
 
         {/* --- PROTECTED ADMIN ROUTES --- */}
@@ -68,7 +71,6 @@ function App() {
           </Route>
         </Route>
 
-        {/* Redirect base /admin to dashboard (if logged in) or login */}
         <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
         
         <Route path="*" element={
@@ -78,6 +80,10 @@ function App() {
           </div>
         } />
       </Routes>
+
+      {/* --- ADD FOOTER HERE --- */}
+      {/* This ensures the footer appears on all public pages, but stays away from the Admin UI */}
+      {!isAdminPage && <Footer />}
     </>
   );
 }

@@ -1,0 +1,102 @@
+.footer {
+    width: 100%;
+    padding: 20px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2d0127;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.touchHint {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: #E6D3B3;
+    opacity: 0.5;
+    font-weight: 600;
+}
+
+.signatureBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #E6D3B3;
+    opacity: 0.6;
+}
+
+.nameLink {
+    font-family: 'Prettywise', serif;
+    font-size: 1.5rem;
+    color: #E6D3B3;
+    line-height: 1;
+}
+
+/* BUTTON GROUP */
+.actionGroup {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.actionBtn {
+    background: #E6D3B3; /* Champagne background */
+    color: #2D0127; /* Deep purple text */
+    padding: 12px 25px;
+    border-radius: 15px;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease;
+}
+
+.actionBtn:hover {
+    transform: translateY(-5px);
+    background: #ffffff;
+}
+
+.emailBtn {
+    background: transparent;
+    color: #E6D3B3;
+    border: 1px solid rgba(230, 211, 179, 0.3);
+}
+
+.emailBtn:hover {
+    background: rgba(230, 211, 179, 0.1);
+    border-color: #E6D3B3;
+}
+
+/* Mobile Tweak */
+@media (max-width: 600px) {
+    .nameLink {
+        font-size: 1.8rem;
+    }
+    .actionGroup {
+        flex-direction: column;
+        width: 100%;
+        max-width: 250px;
+    }
+    .actionBtn {
+        justify-content: center;
+    }
+}

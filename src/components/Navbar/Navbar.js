@@ -44,18 +44,13 @@ const Navbar = () => {
             </a>
           </li>
           <li>
-            <a href="/services" className={getLinkClass('/services')} onClick={closeMenu}>
-              Services
-            </a>
-          </li>
-          <li>
             <a href="/contact" className={getLinkClass('/contact')} onClick={closeMenu}>
               Contact
             </a>
           </li>
           <li>
-            <a href="/upload" className={styles.uploadBtn} onClick={closeMenu}>
-              Upload
+            <a href="/admin/login" className={getLinkClass('/admin/login')} onClick={closeMenu}>
+              Admin
             </a>
           </li>
         </ul>
