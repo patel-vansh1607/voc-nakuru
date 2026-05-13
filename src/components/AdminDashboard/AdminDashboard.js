@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { supabase } from '../../supabaseClient'; // Ensure this is imported
 import styles from './AdminDashboard.module.css';
 import { LayoutDashboard, FileText, Settings, Layers, LogOut } from 'lucide-react';
 
@@ -7,12 +8,31 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Logic to highlight the active button based on the current URL
   const isActive = (path) => location.pathname === path;
+
+  // STRICT LOGOUT LOGIC
+  const handleLogout = async () => {
+    try {
+      // 1. Kill session in Supabase
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) throw error;
+
+      // 2. Clear any local storage leftovers just in case
+      localStorage.clear();
+      sessionStorage.clear();
+
+      // 3. Force navigate to login and prevent "Back" button access
+      navigate('/admin/login', { replace: true });
+    } catch (err) {
+      console.error("Logout failed:", err.message);
+      // Fallback redirect
+      navigate('/admin/login', { replace: true });
+    }
+  };
 
   return (
     <div className={styles.layout}>
-      {/* Sidebar Navigation - Permanent Shell */}
       <aside className={styles.sidebar}>
         <div className={styles.sidebarLogo} onClick={() => navigate('/admin/dashboard')}>
           MINT
@@ -46,16 +66,15 @@ const AdminDashboard = () => {
           </nav>
         </div>
 
-        <button className={styles.logoutBtn} onClick={() => navigate('/admin/login')}>
+        {/* Updated Logout Button */}
+        <button className={styles.logoutBtn} onClick={handleLogout}>
           <LogOut size={18} />
           <span>Logout</span>
         </button>
       </aside>
 
-      {/* Main Content Area */}
       <main className={styles.mainContent}>
         <div className={styles.scrollArea}>
-          {/* THE OUTLET: This is where AdminStudio or other pages render */}
           <Outlet />
         </div>
       </main>

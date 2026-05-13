@@ -7,10 +7,12 @@ const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setErrorMsg('');
     if (!email || !password) return;
 
     setLoading(true);
@@ -22,14 +24,13 @@ const AdminLogin = () => {
       });
 
       if (error) {
-        alert(error.message);
+        setErrorMsg(error.message);
         setLoading(false);
       } else if (data.session) {
-        // Use replace: true to clear login from history
         navigate('/admin/dashboard', { replace: true });
       }
     } catch (err) {
-      alert("An unexpected error occurred.");
+      setErrorMsg("An unexpected error occurred.");
       setLoading(false);
     }
   };
@@ -37,6 +38,7 @@ const AdminLogin = () => {
   return (
     <div className={styles.container}>
       <div className={styles.meshBox}></div>
+      
       <div className={styles.contentSplit}>
         <div className={styles.brandSide}>
           <div className={styles.heroText}>
@@ -52,34 +54,41 @@ const AdminLogin = () => {
               <div className={`${styles.statusDot} ${loading ? styles.animating : ''}`}></div>
             </div>
 
+            {errorMsg && <div className={styles.errorBanner}>{errorMsg}</div>}
+
             <form onSubmit={handleLogin} className={styles.form}>
               <div className={styles.field}>
+                <label>Credentials</label>
                 <input 
                   type="email" 
-                  placeholder="Admin Email" 
+                  placeholder="admin@vocnakuru.com" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={loading}
                   required 
                 />
               </div>
+              
               <div className={styles.field}>
+                <label>Security Key</label>
                 <input 
                   type="password" 
-                  placeholder="Security Key" 
+                  placeholder="••••••••" 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={loading}
                   required 
                 />
               </div>
+
               <button type="submit" className={styles.actionBtn} disabled={loading}>
-                {loading ? 'Verifying...' : 'Access Dashboard'}
+                {loading ? 'Verifying Identity...' : 'Access Dashboard'}
               </button>
             </form>
           </div>
         </div>
       </div>
+
       <footer className={styles.footer}>
         <span>&copy; 2026 VOC NAKURU</span>
         <span className={styles.line}></span>

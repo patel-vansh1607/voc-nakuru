@@ -1,5 +1,6 @@
-import React from "react";
-import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Routes, Route, useLocation, Navigate, Outlet } from "react-router-dom";
+import { supabase } from "./supabaseClient"; // Ensure this path is correct
 import "./App.css";
 
 // Components
@@ -11,6 +12,31 @@ import Bhakti from "./components/Bhakti/Bhakti";
 import AdminLogin from "./components/Login/Login";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import AdminStudio from "./components/AdminStudio/AdminStudio";
+
+// --- PROTECTED ROUTE COMPONENT ---
+const ProtectedRoute = () => {
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Check initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setLoading(false);
+    });
+
+    // Listen for auth changes (login/logout)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  if (loading) return null; // Or a loader
+
+  return session ? <Outlet /> : <Navigate to="/admin/login" replace />;
+};
 
 function App() {
   const location = useLocation();
@@ -26,25 +52,24 @@ function App() {
         <Route path="/stone-laying-ceremony" element={<Stone />} />
         <Route path="/bhakti-bhavna" element={<Bhakti />} />
         
-        {/* Admin Login */}
+        {/* Admin Login - Always Accessible */}
         <Route path="/admin/login" element={<AdminLogin />} />
 
-        {/* --- NESTED ADMIN ROUTES --- */}
-        <Route path="/admin" element={<AdminDashboard />}>
-          {/* This renders at /admin/dashboard */}
-          <Route path="dashboard" element={
-            <div style={{ padding: '40px', color: 'white' }}>
-              <h1>Dashboard Overview</h1>
-              <p>Welcome to the Executive Suite.</p>
-            </div>
-          } />
-          
-          {/* This renders at /admin/pages */}
-          <Route path="pages" element={<AdminStudio />} />
+        {/* --- PROTECTED ADMIN ROUTES --- */}
+        <Route path="/admin" element={<ProtectedRoute />}>
+          <Route element={<AdminDashboard />}>
+            <Route path="dashboard" element={
+              <div style={{ padding: '40px', color: 'white' }}>
+                <h1>Dashboard Overview</h1>
+                <p>Welcome to the Executive Suite.</p>
+              </div>
+            } />
+            <Route path="pages" element={<AdminStudio />} />
+          </Route>
         </Route>
 
-        {/* Redirects */}
-        <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
+        {/* Redirect base /admin to dashboard (if logged in) or login */}
+        <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
         
         <Route path="*" element={
           <div style={{ color: 'white', padding: '100px', textAlign: 'center' }}>
