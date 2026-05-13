@@ -4,11 +4,11 @@ import styles from './Banner.module.css';
 const Banner = () => {
   const desktopImage = "https://res.cloudinary.com/dxgkcyfrl/image/upload/v1778488741/voc_nakuru_landscape_i52gde.png";
   const mobileImage = "https://res.cloudinary.com/dxgkcyfrl/image/upload/v1778488740/voc_nakuru_potrait_obsxkh.png";
+  const redirectLink = "/";
 
   return (
     <div className={styles.bannerWrapper}>
-      {/* Changed <a> to <div> to fix accessibility error */}
-      <div className={styles.bannerContainer}>
+      <a href={redirectLink} className={styles.bannerLink}>
         <picture>
           {/* Swaps to mobile/portrait if width is less than 1920px */}
           <source media="(max-width: 1919px)" srcSet={mobileImage} />
@@ -20,7 +20,7 @@ const Banner = () => {
           />
         </picture>
         <div className={styles.overlay} />
-      </div>
+      </a>
     </div>
   );
 };
