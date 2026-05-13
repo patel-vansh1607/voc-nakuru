@@ -22,11 +22,17 @@
 
 .mainTitle {
     font-family: 'Prettywise', serif;
-    font-size: clamp(3rem, 10vw, 5rem);
+    font-size: 90px;
     text-transform: uppercase;
     color: #E6D3B3;
 }
+.subTitle{
+    font-family: 'Prettywise', serif;
+    color: #E6D3B3;
+    font-size: 40px;
 
+
+}
 .buttonGrid {
     display: grid;
     grid-template-columns: 2fr;

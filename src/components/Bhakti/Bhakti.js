@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 import styles from "./Bhakti.module.css";
-import { ChevronLeft, Info, Calendar, MapPin } from "lucide-react";
+import { ChevronLeft, Calendar, MapPin, Loader2 } from "lucide-react";
 
 const Bhakti = () => {
   const navigate = useNavigate();
-  const [eventStatus, setEventStatus] = useState("waiting");
+  const [eventStatus, setEventStatus] = useState(null); // Prevents flicker
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -15,8 +16,13 @@ const Bhakti = () => {
         .select('status')
         .eq('id', 'bhakti_bhavna')
         .single();
-      if (data) setEventStatus(data.status);
+      
+      if (data) {
+        setEventStatus(data.status);
+      }
+      setLoading(false);
     };
+    
     fetchStatus();
 
     const channel = supabase
@@ -32,6 +38,15 @@ const Bhakti = () => {
 
     return () => supabase.removeChannel(channel);
   }, []);
+
+  // Professional loading screen while Supabase fetches
+  if (loading) {
+    return (
+      <div className={styles.loaderWrapper}>
+        <Loader2 className={styles.spinner} size={40} />
+      </div>
+    );
+  }
 
   return (
     <div className={`${styles.wrapper} ${styles[eventStatus + 'Bg']}`}>
@@ -50,7 +65,7 @@ const Bhakti = () => {
           <div className={styles.meta}>
             <div className={`${styles.badge} ${styles[eventStatus + 'Badge']}`}>
               <span className={styles.pulseDot}></span>
-              {eventStatus.toUpperCase()}
+              {eventStatus === "waiting" ? "UPCOMING" : eventStatus.toUpperCase()}
             </div>
             <h1 className={styles.title}>Bhakti Bhavna</h1>
             <div className={styles.details}>
@@ -61,6 +76,8 @@ const Bhakti = () => {
 
           <div className={`${styles.screenWrapper} ${styles[eventStatus + 'Glow']}`}>
             <div className={styles.screenInner}>
+              
+              {/* WAITING */}
               {eventStatus === "waiting" && (
                 <div className={styles.placeholderState}>
                   <div className={styles.timerIcon}>📿</div>
@@ -69,25 +86,31 @@ const Bhakti = () => {
                 </div>
               )}
 
+              {/* LIVE */}
               {eventStatus === "live" && (
                 <iframe 
-                  src="https://www.youtube.com/embed/QVUhwfEq-KE?autoplay=1&rel=0" 
+                  src="https://www.youtube.com/embed/QVUhwfEq-KE?autoplay=1&rel=0&modestbranding=1" 
                   title="Live Stream"
                   className={styles.iframe}
                   allowFullScreen
                 ></iframe>
               )}
 
+              {/* COMPLETED - Direct replay, no button */}
               {eventStatus === "completed" && (
-                <div className={styles.placeholderState}>
-                  <div className={styles.checkIcon}>✓</div>
-                  <h2>Session Concluded</h2>
-                  <p>The broadcast has ended. Replay is available below.</p>
-                  <button onClick={() => setEventStatus("live")} className={styles.replayBtn}>
-                    Watch Replay
-                  </button>
-                </div>
+                <>
+                  <div className={styles.completedOverlay}>
+                    <span>Recording Available</span>
+                  </div>
+                  <iframe 
+                    src="https://www.youtube.com/embed/QVUhwfEq-KE?rel=0&modestbranding=1" 
+                    title="Event Recording"
+                    className={styles.iframe}
+                    allowFullScreen
+                  ></iframe>
+                </>
               )}
+              
             </div>
           </div>
         </div>

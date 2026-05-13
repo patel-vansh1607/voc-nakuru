@@ -7,7 +7,26 @@
     overflow-x: hidden;
     transition: background 1s ease;
 }
+.completedOverlay {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none; /* So it doesn't block clicking the video */
+}
 
+.completedOverlay span {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #2ecc71; /* Green to show it's successfully finished */
+}
 .overlay {
     position: absolute;
     top: 0; 
@@ -199,6 +218,7 @@
     0% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.4; transform: scale(1.2); }
     100% { opacity: 1; transform: scale(1); }
+    
 }
 
 @media (max-width: 768px) {
@@ -206,4 +226,9 @@
     .container { padding-top: 10px; }
     .screenWrapper { border-radius: 20px; }
     .screenInner { border-radius: 15px; }
+    .completedOverlay {
+        top: 10px;
+        right: 10px;
+        padding: 5px 10px;
+    }
 }
