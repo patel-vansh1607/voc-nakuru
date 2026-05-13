@@ -7,7 +7,8 @@ const Banner = () => {
 
   return (
     <div className={styles.bannerWrapper}>
-      <a className={styles.bannerLink}>
+      {/* Changed <a> to <div> to fix accessibility error */}
+      <div className={styles.bannerContainer}>
         <picture>
           {/* Swaps to mobile/portrait if width is less than 1920px */}
           <source media="(max-width: 1919px)" srcSet={mobileImage} />
@@ -19,7 +20,7 @@ const Banner = () => {
           />
         </picture>
         <div className={styles.overlay} />
-      </a>
+      </div>
     </div>
   );
 };
