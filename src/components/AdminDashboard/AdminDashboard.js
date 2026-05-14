@@ -61,16 +61,14 @@ const AdminDashboard = () => {
               <FileText size={18} />
               Pages
             </button>
-            <button className={styles.navLink}><Layers size={18} /> Components</button>
-            <button className={styles.navLink}><Settings size={18} /> Settings</button>
           </nav>
         </div>
 
         {/* Updated Logout Button */}
         <button className={styles.logoutBtn} onClick={handleLogout}>
-          <LogOut size={18} />
-          <span>Logout</span>
-        </button>
+  <LogOut size={15} strokeWidth={2.5} />
+  <span>Logout</span>
+</button>
       </aside>
 
       <main className={styles.mainContent}>

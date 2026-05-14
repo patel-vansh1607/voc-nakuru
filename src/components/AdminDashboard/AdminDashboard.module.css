@@ -115,3 +115,61 @@
   background: #111;
   color: #fff;
 }
+.logoutBtn {
+  --btn-bg: rgba(255, 255, 255, 0.03);
+  --btn-border: rgba(255, 255, 255, 0.08);
+  --accent-red: #ff4d4d;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px;
+  
+  background: var(--btn-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #a3a3a3;
+  border: 1px solid var(--btn-border);
+  border-radius: 7px;
+  
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* The "Glow" Effect */
+.logoutBtn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 77, 77, 0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.logoutBtn:hover {
+  color: var(--accent-red);
+  border-color: rgba(255, 77, 77, 0.3);
+  background: rgba(255, 77, 77, 0.05);
+  transform: translateY(-1px);
+}
+
+.logoutBtn:hover::before {
+  opacity: 1;
+}
+
+.logoutBtn svg {
+  transition: transform 0.3s ease;
+}
+
+.logoutBtn:hover svg {
+  transform: translateX(3px);
+  stroke: var(--accent-red);
+}
+
+.logoutBtn:active {
+  transform: translateY(0) scale(0.97);
+}

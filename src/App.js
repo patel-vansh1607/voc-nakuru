@@ -5,7 +5,7 @@ import "./App.css";
 
 // Components
 import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer"; // Import your new Footer
+import Footer from "./components/Footer/Footer";
 import Home from "./components/Home/Home";
 import Banner from "./components/Banner/Banner";
 import Stone from "./components/Stone/Stone";
@@ -15,6 +15,32 @@ import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import AdminStudio from "./components/AdminStudio/AdminStudio";
 import Contact from "./components/Contact/Contact";
 import NotFound from "./components/NotFound.js/NotFound";
+
+// --- NEW: PAGE TITLE & SCROLL MANAGER ---
+const RouteManager = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    // 1. Handle Scroll to Top
+    window.scrollTo(0, 0);
+
+    // 2. Handle Dynamic Page Titles
+    const titles = {
+      "/": "Home | Home",
+      "/stone-laying-ceremony": "Stone Laying Ceremony",
+      "/bhakti-bhavna": "Bhakti Bhavna Event",
+      "/contact": "Contact Us",
+      "/admin/login": "Admin Login",
+      "/admin/dashboard": "Executive Dashboard",
+      "/admin/pages": "Admin Studio",
+    };
+
+    // Default title for 404 or missing routes
+    document.title = titles[pathname] || "Page Not Found";
+  }, [pathname]);
+
+  return null;
+};
 
 // --- PROTECTED ROUTE COMPONENT ---
 const ProtectedRoute = () => {
@@ -41,25 +67,23 @@ const ProtectedRoute = () => {
 
 function App() {
   const location = useLocation();
-  // Check if we are in the admin panel
   const isAdminPage = location.pathname.startsWith('/admin');
 
   return (
     <>
-      {/* Show Navbar only if NOT an admin page */}
+      {/* Manages both Scroll and Document Title */}
+      <RouteManager />
+
       {!isAdminPage && <Navbar />}
 
       <Routes>
-        {/* Public Routes */}
         <Route path="/" element={<><Banner /><Home /></>} />
         <Route path="/stone-laying-ceremony" element={<Stone />} />
         <Route path="/bhakti-bhavna" element={<Bhakti />} />
         <Route path="/contact" element={<Contact />} />
         
-        {/* Admin Login */}
         <Route path="/admin/login" element={<AdminLogin />} />
 
-        {/* --- PROTECTED ADMIN ROUTES --- */}
         <Route path="/admin" element={<ProtectedRoute />}>
           <Route element={<AdminDashboard />}>
             <Route path="dashboard" element={
@@ -73,12 +97,9 @@ function App() {
         </Route>
 
         <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
-        
-        <Route path="*" element={<NotFound />    } />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
-      {/* --- ADD FOOTER HERE --- */}
-      {/* This ensures the footer appears on all public pages, but stays away from the Admin UI */}
       {!isAdminPage && <Footer />}
     </>
   );
