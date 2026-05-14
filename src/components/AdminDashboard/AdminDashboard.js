@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../../supabaseClient'; // Ensure this is imported
 import styles from './AdminDashboard.module.css';
-import { LayoutDashboard, FileText, Settings, Layers, LogOut } from 'lucide-react';
+import { LayoutDashboard, FileText, LogOut } from 'lucide-react';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
