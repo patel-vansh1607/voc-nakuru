@@ -6,7 +6,7 @@ import { ChevronLeft, Calendar, MapPin, Loader2 } from "lucide-react";
 
 const Stone = () => {
   const navigate = useNavigate();
-  const [eventStatus, setEventStatus] = useState(null); // Initialize as null to prevent flicker
+  const [eventStatus, setEventStatus] = useState(null); 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const Stone = () => {
       if (data) {
         setEventStatus(data.status);
       }
-      setLoading(false); // Data is now locked in
+      setLoading(false);
     };
     
     fetchStatus();
@@ -39,7 +39,6 @@ const Stone = () => {
     return () => supabase.removeChannel(channel);
   }, []);
 
-  // If we haven't gotten the Supabase status yet, show a clean loader
   if (loading) {
     return (
       <div className={styles.loaderWrapper}>
@@ -70,7 +69,7 @@ const Stone = () => {
             <h1 className={styles.title}>Stone Laying Ceremony</h1>
             <div className={styles.details}>
               <span><Calendar size={14} /> 15 May 2026</span>
-              <span><MapPin size={14} /> Visa Oshwal, Nakuru - Kenya</span>
+              <span><MapPin size={14} /> Visa Oshwal, Nakuru</span>
             </div>
           </div>
 
@@ -79,13 +78,15 @@ const Stone = () => {
               
               {eventStatus === "waiting" && (
                 <div className={styles.placeholderState}>
-<div className={styles.timerIcon}>
-  <div className={styles.innerZap}>⚡</div>
-  <div className={styles.pulseRing}></div>
-  <div className={styles.pulseRing2}></div>
-</div>            
-                  <h2 className={styles.p}>Live Stream will Start at <br /> 9:00am EAT, 15th May</h2>
-                  <p>We are preparing the broadcast.</p>
+                  <div className={styles.iconCenteringWrapper}>
+                    <div className={styles.timerIcon}>
+                      <div className={styles.innerZap}>⚡</div>
+                      <div className={styles.pulseRing}></div>
+                      <div className={styles.pulseRing2}></div>
+                    </div>
+                  </div>
+                  <h2 className={styles.pa}>Live Stream will Start at <br /> 9:00am EAT, 15th May</h2>
+                  <p className={styles.subtext}>We are preparing the broadcast.</p>
                 </div>
               )}
 
@@ -111,7 +112,6 @@ const Stone = () => {
                   ></iframe>
                 </>
               )}
-              
             </div>
           </div>
         </div>

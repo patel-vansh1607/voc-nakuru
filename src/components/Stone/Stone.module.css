@@ -6,47 +6,28 @@
     position: relative;
     overflow-x: hidden;
     transition: background 1s ease;
-    padding: 100px;
-}
-.completedOverlay {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 5;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
-    padding: 8px 15px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    pointer-events: none; /* So it doesn't block clicking the video */
+    display: flex;
+    flex-direction: column;
+    padding-top: 100px;
 }
 
-.completedOverlay span {
-    font-size: 0.7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #2ecc71; /* Green to show it's successfully finished */
-}
 .overlay {
     position: absolute;
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     background: radial-gradient(circle at 50% -20%, rgba(168, 85, 247, 0.15), transparent);
     pointer-events: none;
 }
 
-/* Dynamic Backgrounds based on status */
+/* Backgrounds */
 .liveBg { background: radial-gradient(circle at 50% -20%, rgba(255, 77, 77, 0.15), #0f0211); }
 .completedBg { background: radial-gradient(circle at 50% -20%, rgba(46, 204, 113, 0.15), #0f0211); }
 
+/* Navigation */
 .navBar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 50px;
+    padding: clamp(15px, 4vw, 30px) clamp(20px, 5vw, 50px);
     position: relative;
     z-index: 10;
 }
@@ -55,35 +36,25 @@
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: #fff;
-    padding: 12px 24px;
-    border-radius: 14px;
+    padding: 10px 20px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     cursor: pointer;
     transition: 0.3s;
     font-weight: 600;
 }
 
-.backButton:hover { 
-    background: rgba(255, 255, 255, 0.12); 
-    transform: translateX(-5px);
-}
-
-.brand {
-    font-weight: 800;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    opacity: 0.5;
-}
-
+/* Layout Container */
 .container {
+    width: 100%;
     max-width: 1100px;
     margin: 0 auto;
-    padding: 20px 20px 80px;
+    padding: clamp(20px, 5vw, 40px) 20px 80px;
     position: relative;
     z-index: 2;
+    box-sizing: border-box;
 }
 
 .heroSection {
@@ -93,45 +64,44 @@
     text-align: center;
 }
 
-.meta { margin-bottom: 50px; }
+.meta { margin-bottom: clamp(30px, 6vw, 50px); width: 100%; }
 
 .title {
     font-family: 'Prettywise', serif;
-    font-size: clamp(2.5rem, 7vw, 4.5rem);
-    margin: 20px 0;
+    font-size: clamp(2.2rem, 8vw, 4.2rem);
+    margin: 15px 0;
     background: linear-gradient(to bottom, #ffffff 30%, rgba(255,255,255,0.5) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -1px;
+    line-height: 1.1;
 }
 
 .details {
     display: flex;
-    gap: 30px;
+    gap: clamp(15px, 4vw, 30px);
     justify-content: center;
+    flex-wrap: wrap;
     opacity: 0.6;
-    font-size: 0.95rem;
-    font-weight: 500;
+    font-size: clamp(0.85rem, 2vw, 1rem);
 }
 
-.details span { display: flex; align-items: center; gap: 8px; }
-
-/* The Screen (Cinema Wrapper) */
+/* Screen Wrapper */
 .screenWrapper {
     width: 100%;
-    aspect-ratio: 16/9;
+    aspect-ratio: 16 / 9;
     background: #000;
-    border-radius: 35px;
-    padding: 10px;
+    border-radius: clamp(16px, 4vw, 35px);
+    padding: clamp(6px, 1.2vw, 10px);
     position: relative;
-    box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.8);
     transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-sizing: border-box;
 }
 
 .screenInner {
-    width: 100%;
-    height: 100%;
-    border-radius: 25px;
+    width: 100%; height: 100%;
+    border-radius: clamp(12px, 3vw, 25px);
     overflow: hidden;
     position: relative;
     background: #1a021d;
@@ -140,21 +110,75 @@
     justify-content: center;
 }
 
-.iframe { 
-    width: 100%; 
-    height: 100%; 
-    border: none; 
+.iframe { width: 100%; height: 100%; border: none; }
+
+/* Placeholder Centering */
+.placeholderState {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
-/* Status Glow Effects */
-.waitingGlow { border: 1px solid rgba(255, 255, 255, 0.08); }
-.liveGlow { 
-    border: 1px solid rgba(255, 77, 77, 0.4); 
-    box-shadow: 0 0 60px rgba(255, 77, 77, 0.15), 0 40px 100px rgba(0,0,0,0.8); 
+.iconCenteringWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
-.completedGlow { border: 1px solid rgba(46, 204, 113, 0.4); }
 
-/* Badges */
+.timerIcon {
+    position: relative;
+    width: clamp(60px, 10vw, 80px);
+    height: clamp(60px, 10vw, 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(168, 85, 247, 0.15);
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.innerZap {
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+    z-index: 3;
+    animation: zapFloat 3s ease-in-out infinite;
+}
+
+.pulseRing, .pulseRing2 {
+    position: absolute;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    border: 2px solid #a855f7;
+    opacity: 0;
+}
+
+.pulseRing { animation: purpleRipple 3s infinite cubic-bezier(0.25, 0, 0.3, 1); }
+.pulseRing2 { animation: purpleRipple 3s infinite cubic-bezier(0.25, 0, 0.3, 1); animation-delay: 1.5s; }
+
+/* Mobile safe zones */
+@media (max-width: 768px) {
+    .container { padding-top: 100px !important; } /* Pushes content below mobile navbar */
+    .details { flex-direction: column; gap: 10px; }
+    .screenWrapper { aspect-ratio: 16 / 10; }
+}
+
+@keyframes purpleRipple {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes zapFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Common Components */
+.loaderWrapper { height: 100vh; display: flex; align-items: center; justify-content: center; background: #0f0211; }
+.spinner { color: #a855f7; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
 .badge {
     display: inline-flex;
     align-items: center;
@@ -167,150 +191,11 @@
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
-
-.liveBadge { background: #ff4d4d; color: #fff; border: none; box-shadow: 0 0 20px rgba(255, 77, 77, 0.4); }
+.liveBadge { background: #ff4d4d; color: #fff; box-shadow: 0 0 20px rgba(255, 77, 77, 0.4); border: none; }
 .completedBadge { background: #2ecc71; color: #fff; border: none; }
+.pulseDot { width: 8px; height: 8px; background: #fff; border-radius: 50%; animation: blink 1.2s infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-.pulseDot {
-    width: 8px;
-    height: 8px;
-    background: #fff;
-    border-radius: 50%;
-    animation: blink 1.2s infinite;
-}
-
-/* States within the screen */
-.placeholderState {
-    text-align: center;
-    padding: 40px;
-    align-items: center;      /* Centers horizontally */
-    justify-content: center;
-}
-
- .checkIcon {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    display: block;
-}
-
-.placeholderState h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-.placeholderState p {
-    opacity: 0.6;
-    max-width: 400px;
-    margin: 0 auto 30px;
-}
-
-.replayBtn {
-    background: #fff;
-    color: #000;
-    border: none;
-    padding: 14px 30px;
-    border-radius: 12px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.replayBtn:hover { transform: scale(1.05); }
-
-@keyframes blink {
-    0% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(1.2); }
-    100% { opacity: 1; transform: scale(1); }
-    
-}
-
-@media (max-width: 768px) {
-    .navBar { padding: 20px; }
-    .container { padding-top: 10px; }
-    .screenWrapper { border-radius: 20px; }
-    .screenInner { border-radius: 15px; }
-    .completedOverlay {
-        top: 10px;
-        right: 10px;
-        padding: 5px 10px;
-    }
-}
-.p{
-    font-family: 'Prettywise', serif;
-    line-spacing: 1.5;
-}
-.timerIcon {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(168, 85, 247, 0.15); /* Soft purple base */
-    border-radius: 50%;
-    margin-bottom: 25px;
-    align-items: center;      /* Centers Zap/Icon horizontally */
-    justify-content: center;     /* Centers Zap/Icon vertically */
-    margin: 0 auto 25px;
-}
-
-.innerZap {
-    font-size: 1.8rem;
-    z-index: 3;
-    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.8));
-    animation: zapFloat 3s ease-in-out infinite;
-}
-
-/* The Animated Pulse Rings */
-.pulseRing, .pulseRing2 {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 2px solid #a855f7; /* Your primary purple */
-    opacity: 0;
-    z-index: 1;
-    pointer-events: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.pulseRing {
-    animation: purpleRipple 3s infinite cubic-bezier(0.25, 0, 0.3, 1);
-}
-
-.pulseRing2 {
-    animation: purpleRipple 3s infinite cubic-bezier(0.25, 0, 0.3, 1);
-    animation-delay: 1.5s; /* Staggered effect */
-}
-
-/* Animations */
-@keyframes purpleRipple {
-    0% {
-        transform: scale(0.8);
-        opacity: 0.8;
-        border-width: 4px;
-    }
-    100% {
-        transform: scale(2.2);
-        opacity: 0;
-        border-width: 1px;
-        filter: blur(4px);
-    }
-}
-
-@keyframes zapFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-}
-
-/* For extreme responsive safety */
-@media (max-width: 600px) {
-    .timerIcon {
-        width: 60px;
-        height: 60px;
-    }
-    .innerZap {
-        font-size: 1.4rem;
-    }
+.pa{
+        font-family: 'Prettywise', serif;
 }

@@ -53,19 +53,19 @@ const Bhakti = () => {
     <div className={`${styles.wrapper} ${styles[eventStatus + 'Bg']}`}>
       <div className={styles.overlay}></div>
       
-      <header className={styles.navBar}>
-        <button onClick={() => navigate("/")} className={styles.backButton}>
+      <header className={styless.navBar}>
+        <button onClick={() => navigate("/")} className={styless.backButton}>
           <ChevronLeft size={20} />
           <span>Events</span>
         </button>
-        <div className={styles.brand}>Visa Oshwal Community</div>
+        <div className={styless.brand}>Visa Oshwal Community</div>
       </header>
 
       <main className={styles.container}>
         <div className={styles.heroSection}>
           <div className={styles.meta}>
-            <div className={`${styles.badge} ${styles[eventStatus + 'Badge']}`}>
-              <span className={styles.pulseDot}></span>
+            <div className={`${styless.badge} ${styless[eventStatus + 'Badge']}`}>
+              <span className={styless.pulseDot}></span>
               {eventStatus === "waiting" ? "UPCOMING" : eventStatus.toUpperCase()}
             </div>
             <h1 className={styles.title}>Bhakti Bhavna</h1>
@@ -75,18 +75,18 @@ const Bhakti = () => {
             </div>
           </div>
 
-          <div className={`${styles.screenWrapper} ${styles[eventStatus + 'Glow']}`}>
-            <div className={styles.screenInner}>
+          <div className={`${styless.screenWrapper} ${styless[eventStatus + 'Glow']}`}>
+            <div className={styless.screenInner}>
               
               {/* WAITING */}
               {eventStatus === "waiting" && (
-                <div className={styles.placeholderState}>
+                <div className={styless.placeholderState}>
 <div className={styless.timerIcon}>
   <div className={styless.innerZap}>⚡</div>
   <div className={styless.pulseRing}></div>
   <div className={styless.pulseRing2}></div>
 </div>            
-                  <h2 className={styless.p}>Live Stream will Start at <br /> 7:45pm EAT, 15th May</h2>
+                  <h2 className={styless.pa}>Live Stream will Start at <br /> 7:45pm EAT, 15th May</h2>
                   <p>We are preparing the broadcast.</p>
                 </div>
               )}
@@ -96,7 +96,7 @@ const Bhakti = () => {
                 <iframe 
                   src="https://www.youtube.com/embed/QVUhwfEq-KE?autoplay=1&rel=0&modestbranding=1" 
                   title="Live Stream"
-                  className={styles.iframe}
+                  className={styless.iframe}
                   allowFullScreen
                 ></iframe>
               )}

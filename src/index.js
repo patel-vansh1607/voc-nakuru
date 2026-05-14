@@ -7,7 +7,7 @@ import Maintenance from './components/Maintenance/Maintenance';
 import reportWebVitals from './reportWebVitals';
 
 // SET THIS TO 'false' TO TURN OFF MAINTENANCE MODE
-const isMaintenance = true; 
+const isMaintenance = false; 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
