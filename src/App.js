@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation, Navigate, Outlet } from "react-router-dom";
 import { supabase } from "./supabaseClient"; 
+import { Analytics } from "@vercel/analytics/react";
 import "./App.css";
 
 // Components
@@ -101,6 +102,7 @@ function App() {
       </Routes>
 
       {!isAdminPage && <Footer />}
+      <Analytics />
     </>
   );
 }
