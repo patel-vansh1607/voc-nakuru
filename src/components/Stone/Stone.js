@@ -102,7 +102,7 @@ const Stone = () => {
               {eventStatus === "completed" && (
                 <>
                   <div className={styles.completedOverlay}>
-                    <span>Recording Available</span>
+
                   </div>
                   <iframe 
                     src="https://www.youtube.com/embed/-ZN6og5nMKI?rel=0&modestbranding=1" 

@@ -105,7 +105,6 @@ const Bhakti = () => {
               {eventStatus === "completed" && (
                 <>
                   <div className={styles.completedOverlay}>
-                    <span>Recording Available</span>
                   </div>
                   <iframe 
                     src="https://www.youtube.com/embed/QVUhwfEq-KE?rel=0&modestbranding=1" 
