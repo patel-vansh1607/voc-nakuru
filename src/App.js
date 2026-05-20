@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Home from "./components/Home/Home";
 import Banner from "./components/Banner/Banner";
+import Golden from "./components/Golden/Golden"; // Imported Golden component
 import Stone from "./components/Stone/Stone";
 import Bhakti from "./components/Bhakti/Bhakti";
 import AdminLogin from "./components/Login/Login";
@@ -27,6 +28,7 @@ const RouteManager = () => {
     // 2. Handle Dynamic Page Titles
     const titles = {
       "/": "Home | Home",
+      "/the-golden-jubilee": "The Golden Jubilee", // Added title for Golden route
       "/stone-laying-ceremony": "Stone Laying Ceremony",
       "/bhakti-bhavna": "Bhakti Bhavna Event",
       "/contact": "Contact Us",
@@ -78,6 +80,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<><Banner /><Home /></>} />
+        <Route path="/the-golden-jubilee" element={<Golden />} /> {/* Added Golden route */}
         <Route path="/stone-laying-ceremony" element={<Stone />} />
         <Route path="/bhakti-bhavna" element={<Bhakti />} />
         <Route path="/contact" element={<Contact />} />

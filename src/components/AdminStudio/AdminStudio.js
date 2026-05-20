@@ -5,6 +5,7 @@ import { Play, Pause, CheckCircle, Loader2, Zap } from 'lucide-react';
 import Swal from 'sweetalert2';
 
 const AdminStudio = () => {
+  const [goldenStatus, setGoldenStatus] = useState('waiting');
   const [stoneStatus, setStoneStatus] = useState('waiting');
   const [bhaktiStatus, setBhaktiStatus] = useState('waiting');
   const [loading, setLoading] = useState(null); // Tracks which event is loading
@@ -14,6 +15,7 @@ const AdminStudio = () => {
       const { data } = await supabase.from('event_settings').select('id, status');
       if (data) {
         data.forEach(item => {
+          if (item.id === 'golden') setGoldenStatus(item.status);
           if (item.id === 'stone_laying') setStoneStatus(item.status);
           if (item.id === 'bhakti_bhavna') setBhaktiStatus(item.status);
         });
@@ -30,6 +32,7 @@ const AdminStudio = () => {
       .eq('id', id);
 
     if (!error) {
+      if (id === 'golden') setGoldenStatus(newStatus);
       if (id === 'stone_laying') setStoneStatus(newStatus);
       if (id === 'bhakti_bhavna') setBhaktiStatus(newStatus);
       
@@ -85,7 +88,7 @@ const AdminStudio = () => {
           <Zap size={20} color={themeColor} style={{ marginBottom: '10px' }} />
           <h2 style={{ color: '#fff', fontSize: '1.8rem', margin: 0 }}>{title}</h2>
           <p style={{ color: themeColor, fontSize: '0.7rem', letterSpacing: '3px', marginTop: '10px' }}>
-            CURRENTLY: {currentStatus.toUpperCase()}
+            CURRENTLY: {currentStatus ? currentStatus.toUpperCase() : 'WAITING'}
           </p>
         </div>
 
@@ -103,7 +106,11 @@ const AdminStudio = () => {
           </button>
         </div>
         
-        {loading === id && <div style={{ textAlign: 'center', marginTop: '20px' }}><Loader2 className={st.spinner} color={themeColor} /></div>}
+        {loading === id && (
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <Loader2 className={st.spinner} color={themeColor} />
+          </div>
+        )}
       </div>
     );
   };
@@ -122,10 +129,19 @@ const AdminStudio = () => {
         justifyContent: 'center', 
         alignItems: 'flex-start',
         width: '100%',
-        maxWidth: '1200px',
+        maxWidth: '1400px',
         margin: '0 auto'
       }}>
-        {/* BUTTON SET 1: STONE LAYING */}
+        {/* BUTTON SET 1: GOLDEN JUBILEE CEREMONY */}
+        <ControlBox 
+          id="golden" 
+          title="Golden Jubilee" 
+          currentStatus={goldenStatus} 
+          themeColor="#e6d3b3" // Premium Cream/Gold Theme
+          liveColor="#ff4d4d"
+        />
+
+        {/* BUTTON SET 2: STONE LAYING */}
         <ControlBox 
           id="stone_laying" 
           title="Stone Laying" 
@@ -134,7 +150,7 @@ const AdminStudio = () => {
           liveColor="#ff4d4d"
         />
 
-        {/* BUTTON SET 2: BHAKTI BHAVNA */}
+        {/* BUTTON SET 3: BHAKTI BHAVNA */}
         <ControlBox 
           id="bhakti_bhavna" 
           title="Bhakti Bhavna" 
