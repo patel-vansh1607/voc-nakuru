@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
-import styles from "./Bhakti.module.css";
+import styles from "./Golden.module.css";
 import styless   from "../Stone/Stone.module.css"; // Reusing some styles for loading state
 import { ChevronLeft, Calendar, MapPin, Loader2 } from "lucide-react";
 
